@@ -14,48 +14,84 @@ import ProtectedRoute from './ProtectedRoute';
 import MainPage from './MainPage';
 import Login from './Login';
 import Register from './Register';
+import * as auth from '../utils/auth.js';
+
 
 function App() {
+
+  const history = useHistory();
   const [loggedIn, setLoggedIn] = useState(false);
   
 
+  function handleLogin() {
+    setLoggedIn(true)
+  }
+
+  // function tokenCheck() {
+  //   if (localStorage.getItem('token')) {
+  //     const token = localStorage.getItem('token');
+
+  //     if (token) {
+  //       auth.getContent(token)
+  //         .then((res) => {
+  //           if (res) {
+  //             console.log(res)
+  //             setLoggedIn(true);
+  //             history.push('/main');
+  //           }
+  //         })
+  //         .catch(err => {
+  //           setLoggedIn(false);
+  //           console.log('Что-то пошло не так!')
+  //         });
+  //     }
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   tokenCheck()
+  // }, [tokenCheck]);
+
+
   return (
-    
-      <div className="App">
-        <div className="root">
+
+    <div className="App">
+      <div className="root">
         <Header />
-          <Switch>
-            <ProtectedRoute
-              path="/main"
-              loggedIn={loggedIn}
-              component={MainPage}
+        <Switch>
+          <ProtectedRoute
+            path="/main"
+            loggedIn={loggedIn}
+            component={MainPage}
+          />
+
+
+
+
+
+
+
+          <Route path="/sign-up">
+            <Register />
+          </Route>
+          <Route path="/sign-in">
+            <Login
+              handleLogin={handleLogin}
             />
-              
-            
+          </Route>
+          <Route exact path="/">
+            {loggedIn ? <Redirect to="/main" /> : <Redirect to="/sign-up" />}
+          </Route>
 
 
 
 
-
-            <Route path="/sign-up">
-              <Register />
-            </Route>
-            <Route path="/sign-in">
-              <Login />
-            </Route>
-            <Route exact path="/">
-              {loggedIn ? <Redirect to="/main" /> : <Redirect to="/sign-up" />}
-            </Route>
-
-
-
-
-          </Switch>
-          <Footer />
-
-        </div>
+        </Switch>
+        <Footer />
+        
       </div>
-    
+    </div>
+
   );
 }
 
