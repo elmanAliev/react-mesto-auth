@@ -21,56 +21,53 @@ function App() {
 
   const history = useHistory();
   const [loggedIn, setLoggedIn] = useState(false);
-  
+  const [email, setEmail] = useState('');
 
   function handleLogin() {
     setLoggedIn(true)
   }
 
-  // function tokenCheck() {
-  //   if (localStorage.getItem('token')) {
-  //     const token = localStorage.getItem('token');
+  function tokenCheck() {
+    if (localStorage.getItem('token')) {
+      const token = localStorage.getItem('token');
 
-  //     if (token) {
-  //       auth.getContent(token)
-  //         .then((res) => {
-  //           if (res) {
-  //             console.log(res)
-  //             setLoggedIn(true);
-  //             history.push('/main');
-  //           }
-  //         })
-  //         .catch(err => {
-  //           setLoggedIn(false);
-  //           console.log('Что-то пошло не так!')
-  //         });
-  //     }
-  //   }
-  // }
+      if (token) {
+        auth.getContent(token)
+          .then((res) => {
+            if (res) {
+              setLoggedIn(true);
+              history.push('/main');
+              setEmail(res.data.email);
 
-  // useEffect(() => {
-  //   tokenCheck()
-  // }, [tokenCheck]);
+            }
+          })
+          .catch(err => {
+            setLoggedIn(false);
+            console.log(err)
+          });
+      }
+    }
+  }
+
+  useEffect(() => {
+    tokenCheck()
+  }, [tokenCheck]);
 
 
   return (
 
     <div className="App">
       <div className="root">
-        <Header />
+        <Header 
+          email={email} 
+          loggedIn={loggedIn} 
+        />
         <Switch>
           <ProtectedRoute
             path="/main"
             loggedIn={loggedIn}
             component={MainPage}
           />
-
-
-
-
-
-
-
           <Route path="/sign-up">
             <Register />
           </Route>
@@ -82,13 +79,8 @@ function App() {
           <Route exact path="/">
             {loggedIn ? <Redirect to="/main" /> : <Redirect to="/sign-up" />}
           </Route>
-
-
-
-
         </Switch>
-        <Footer />
-        
+        <Footer />        
       </div>
     </div>
 
