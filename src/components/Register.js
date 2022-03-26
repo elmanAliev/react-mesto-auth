@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import { Link } from 'react-router-dom';
-import InfoTooltip from './InfoTooltip';
+
 
 function Register({ }) {
     const [email, setEmail] = useState('');
@@ -61,7 +61,6 @@ function Register({ }) {
                 <button type="submit" className="form__submit-button">Зарегистрироваться</button>               
             </form>
             <Link to="/sign-in" className="form__link">Уже зарегистрированы? Войти</Link>
-            <InfoTooltip />
         </div>
     )
 }
