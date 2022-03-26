@@ -1,0 +1,9 @@
+.form__submit-button {
+    margin-top: 216px;
+    width: 100%;
+    min-height: 50px;
+    background-color: #FFFFFF;
+    border-radius: 2px;
+    cursor: pointer;
+    border: 0;
+}
