@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import InfoTooltip from './InfoTooltip';
 import * as auth from '../utils/auth.js';
 
-function Register({ }) {
+function Register() {
 
     const history = useHistory();
     const [email, setEmail] = useState('');
