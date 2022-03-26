@@ -20,24 +20,22 @@ function App() {
   }
 
   function tokenCheck() {
-    if (localStorage.getItem('token')) {
-      const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token');
 
-      if (token) {
-        auth.getContent(token)
-          .then((res) => {
-            if (res) {
-              setLoggedIn(true);
-              history.push('/');
-              setEmail(res.data.email);
+    if (token) {
+      auth.getContent(token)
+        .then((res) => {
+          if (res) {
+            setLoggedIn(true);
+            history.push('/');
+            setEmail(res.data.email);
 
-            }
-          })
-          .catch(err => {
-            setLoggedIn(false);
-            console.log(err)
-          });
-      }
+          }
+        })
+        .catch(err => {
+          setLoggedIn(false);
+          console.log(err)
+        });
     }
   }
 
@@ -50,9 +48,9 @@ function App() {
 
     <div className="App">
       <div className="root">
-        <Header 
-          email={email} 
-          loggedIn={loggedIn} 
+        <Header
+          email={email}
+          loggedIn={loggedIn}
         />
         <Switch>
           <ProtectedRoute
@@ -69,10 +67,10 @@ function App() {
             />
           </Route>
           <Route exact path="/">
-            {loggedIn ? <Redirect to="/main" /> : <Redirect to="/sign-up" />}
+            {loggedIn ? <Redirect to="/main" /> : <Redirect to="/sign-in" />}
           </Route>
         </Switch>
-        <Footer />        
+        <Footer />
       </div>
     </div>
 

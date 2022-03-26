@@ -1,6 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 function PopupWithForm({ onSubmit, onClose, isOpen, name, title, children }) {
+
+    useEffect(() => {
+        function handleEscapeKey(event) {
+            if (event.code === 'Escape') {
+                onClose();
+            }
+        }
+        document.addEventListener('keydown', handleEscapeKey)
+        return () => document.removeEventListener('keydown', handleEscapeKey)
+    }, [isOpen])
 
     return (
         <div className={isOpen ? `popup popup_opened popup_type_${name}` : `popup popup_type_${name}`}>

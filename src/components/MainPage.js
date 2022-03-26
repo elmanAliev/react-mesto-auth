@@ -32,33 +32,27 @@ function MainPage() {
     }
 
     useEffect(() => {
-        function handleEscapeKey(event) {
-            if (event.code === 'Escape') {
-                closeAllPopups();
-            }
-        }
-        document.addEventListener('keydown', handleEscapeKey)
-        return () => document.removeEventListener('keydown', handleEscapeKey)
-    }, [])
-
-    useEffect(() => {
+        let cleanupFunction = false;
         api.getInitialCards()
             .then((cardsArray) => {
-                setCards(cardsArray);
+                if(!cleanupFunction) setCards(cardsArray);
             })
             .catch((err) => {
                 console.log(`Невозможно отобразить карточки с сервера ${err}`);
-            })
+            });
+        return () => cleanupFunction = true;    
     }, [])
 
     useEffect(() => {
+        let cleanupFunction = false;
         api.getUserInfo()
             .then((userInfoObject) => {
-                setCurrentUser(userInfoObject)
+                if(!cleanupFunction) setCurrentUser(userInfoObject)
             })
             .catch((err) => {
                 console.log(`Невозможно получить информацию о пользователе ${err}`);
             });
+        return () => cleanupFunction = true;
     }, [])
 
     function handleUpdateUser(data) {

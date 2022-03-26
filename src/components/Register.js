@@ -34,6 +34,9 @@ function Register() {
                     setStatus(false);
                     setIsStatusPopupOpen(true);
                 }
+            })
+            .catch((err) => {
+                console.log(err)
             });
     }
 
