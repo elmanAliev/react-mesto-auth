@@ -27,7 +27,7 @@ function App() {
         .then((res) => {
           if (res) {
             setLoggedIn(true);
-            history.push('/');
+            history.push('/main');
             setEmail(res.data.email);
 
           }
@@ -62,9 +62,7 @@ function App() {
             <Register />
           </Route>
           <Route path="/sign-in">
-            <Login
-              handleLogin={handleLogin}
-            />
+            <Login handleLogin={handleLogin} />
           </Route>
           <Route exact path="/">
             {loggedIn ? <Redirect to="/main" /> : <Redirect to="/sign-in" />}
