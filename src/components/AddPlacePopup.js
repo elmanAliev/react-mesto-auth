@@ -2,29 +2,26 @@ import React, { useState, useEffect } from 'react';
 import PopupWithForm from './PopupWithForm';
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
-    const [place, setPlace] = useState('');
-    const [url, setUrl] = useState('');
 
-    function handleChangePlace(e) {
-        setPlace(e.target.value);
-    }
-
-    function handleChangeUrl(e) {
-        setUrl(e.target.value);
-    }
-
+    const [values, setValues] = useState({place: '', url: ''})
+    const handleChange = (event) => { 
+        const { name, value } = event.target
+          setValues((prev) => ({ 
+          ...prev, 
+          [name]: value
+        })) 
+    } 
     function handleSubmit(e) {
         e.preventDefault();
         
         onAddPlace({
-            name: place,
-            link: url,
+            name: values.place,
+            link: values.url,
         });
     } 
 
     useEffect(() => {
-        setPlace('');
-        setUrl('')
+        setValues({place: '', url: ''})
     }, [isOpen]); 
 
     return (
@@ -38,8 +35,8 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
                 <fieldset className="popup__info">
                     <div className="popup__info-item">
                         <input
-                            value={place}
-                            onChange={handleChangePlace}
+                            value={values.place}
+                            onChange={handleChange}
                             id="place-input"
                             className="popup__input popup__input_type_place"
                             type="text"
@@ -53,8 +50,8 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
                     </div>
                     <div className="popup__info-item">
                         <input
-                            value={url}
-                            onChange={handleChangeUrl}
+                            value={values.url}
+                            onChange={handleChange}
                             id="url-input"
                             className="popup__input popup__input_type_url"
                             type="url"

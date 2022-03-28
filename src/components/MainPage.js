@@ -17,7 +17,7 @@ function MainPage() {
     const [selectedCard, setSelectedCard] = useState(null);
     const [currentUser, setCurrentUser] = useState({});
     const [cards, setCards] = useState([]);
-    
+
 
     const handleEditProfileClick = () => setIsEditProfilePopupOpen(true);
     const handleAddPlaceClick = () => setIsAddPlacePopupOpen(true);
@@ -31,29 +31,49 @@ function MainPage() {
         setSelectedCard(null);
     }
 
-    useEffect(() => {
-        let cleanupFunction = false;
-        api.getInitialCards()
-            .then((cardsArray) => {
-                if(!cleanupFunction) setCards(cardsArray);
-            })
-            .catch((err) => {
-                console.log(`Невозможно отобразить карточки с сервера ${err}`);
-            });
-        return () => cleanupFunction = true;    
-    }, [])
+    // useEffect(() => {
+    //     let cleanupFunction = false;
+    //     api.getInitialCards()
+    //         .then((cardsArray) => {
+    //             if(!cleanupFunction) setCards(cardsArray);
+    //         })
+    //         .catch((err) => {
+    //             console.log(`Невозможно отобразить карточки с сервера ${err}`);
+    //         });
+    //     return () => cleanupFunction = true;    
+    // }, [])
+
+    // useEffect(() => {
+    //     let cleanupFunction = false;
+    //     api.getUserInfo()
+    //         .then((userInfoObject) => {
+    //             if(!cleanupFunction) setCurrentUser(userInfoObject)
+    //         })
+    //         .catch((err) => {
+    //             console.log(`Невозможно получить информацию о пользователе ${err}`);
+    //         });
+    //     return () => cleanupFunction = true;
+    // }, [])
+
 
     useEffect(() => {
         let cleanupFunction = false;
-        api.getUserInfo()
-            .then((userInfoObject) => {
-                if(!cleanupFunction) setCurrentUser(userInfoObject)
+        Promise.all([api.getInitialCards(), api.getUserInfo()])
+            .then(([cardsArray, userInfoObject]) => {
+                console.log(cardsArray)
+                if(!cleanupFunction) {
+                    setCurrentUser(userInfoObject)
+                    setCards(cardsArray);
+                }
+                
             })
             .catch((err) => {
-                console.log(`Невозможно получить информацию о пользователе ${err}`);
+                console.log(`Невозможно загрузить информацию с сервера ${err}`);
             });
         return () => cleanupFunction = true;
     }, [])
+
+
 
     function handleUpdateUser(data) {
         api.patchUserInfo(data)
@@ -120,7 +140,7 @@ function MainPage() {
 
     return (
         <CurrentUserContext.Provider value={currentUser}>
-            
+
             <Main
                 cards={cards}
                 onCardLike={handleCardLike}
