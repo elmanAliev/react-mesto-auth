@@ -56,21 +56,15 @@ function MainPage() {
     // }, [])
 
 
-    useEffect(() => {
-        let cleanupFunction = false;
+    useEffect(() => {    
         Promise.all([api.getInitialCards(), api.getUserInfo()])
             .then(([cardsArray, userInfoObject]) => {
-                console.log(cardsArray)
-                if(!cleanupFunction) {
-                    setCurrentUser(userInfoObject)
-                    setCards(cardsArray);
-                }
-                
+                setCurrentUser(userInfoObject)
+                setCards(cardsArray);
             })
             .catch((err) => {
                 console.log(`Невозможно загрузить информацию с сервера ${err}`);
-            });
-        return () => cleanupFunction = true;
+            });       
     }, [])
 
 
