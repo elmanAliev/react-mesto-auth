@@ -75,3 +75,6 @@
 @import url(./blocks/form/__input/form__input.css);
 @import url(./blocks/form/__submit-button/form__submit-button.css);
 @import url(./blocks/form/__link/form__link.css);
+
+@import url(./blocks/page-not-found/page-not-found.css);
+@import url(./blocks/page-not-found/__title/page-not-found__title.css);

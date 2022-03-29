@@ -7,7 +7,7 @@ import MainPage from './MainPage';
 import Login from './Login';
 import Register from './Register';
 import * as auth from '../utils/auth.js';
-
+import PageNotFound from './PageNotFound';
 
 function App() {
 
@@ -64,9 +64,15 @@ function App() {
           <Route path="/sign-in">
             <Login handleLogin={handleLogin} />
           </Route>
-          <Route exact path="/">
+          {/* <Route exact path="/">
+            {loggedIn ? <Redirect to="/main" /> : <Redirect to="/sign-in" />}
+          </Route> */}
+          <Route path="*">
             {loggedIn ? <Redirect to="/main" /> : <Redirect to="/sign-in" />}
           </Route>
+          {/* <Route path="*">
+            <PageNotFound />
+          </Route> */}
         </Switch>
         <Footer />
       </div>
