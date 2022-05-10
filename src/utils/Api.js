@@ -80,10 +80,18 @@ class Api {
     }
 }
 
+// const api = new Api({
+//     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-35',
+//     headers: {
+//       authorization: '38cb0870-aa41-456b-9f9f-084af1a40bb1',
+//       'Content-Type': 'application/json',
+//     },
+// });
+
 const api = new Api({
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-35',
+    baseUrl: 'https://api.elman3605.students.nomoredomains.xyz',
     headers: {
-      authorization: '38cb0870-aa41-456b-9f9f-084af1a40bb1',
+    //   authorization: '38cb0870-aa41-456b-9f9f-084af1a40bb1',
       'Content-Type': 'application/json',
     },
 });
